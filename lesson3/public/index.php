@@ -4,9 +4,8 @@ use app\engine\Autoload;
 use app\models\{Product, User};
 use app\engine\Db;
 
-//TODO добавьте абсолютные пути
-include "../engine/Autoload.php";
-include "../config/config.php";
+include dirname(__DIR__) . "/config/config.php";
+include ROOT . "/engine/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
