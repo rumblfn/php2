@@ -7,11 +7,7 @@ include dirname(__DIR__) . "/config/config.php";
 include ROOT . "/engine/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
-//
-//$product = Product::getOne(4);
-//$product->collection = 'www';
-//$product->save();
-//var_dump($product);
+
 
 $controllerName = $_GET['c'] ?: 'product';
 $actionName = $_GET['a'];

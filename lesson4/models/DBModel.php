@@ -13,10 +13,11 @@ abstract class DBModel extends Model
         $params = [];
         $columns = [];
 
-        foreach ($this as $key => $value) {
-            if ($key == 'id' || $key == 'views') continue;
-            $params[":" . $key] = $value;
+        foreach ($this->props as $key => $value) {
+            $params[":" . $key] = $this->$key;
             $columns[] = $key;
+
+            $this->props[$key] = false;
         }
 
         $columns = implode(', ', $columns);
@@ -35,7 +36,6 @@ abstract class DBModel extends Model
 
     public function update(): Model
     {
-        var_dump($this->props);
         $params = [];
         $tableName = static::getTableName();
         $sql = "UPDATE `{$tableName}` SET ";
@@ -43,13 +43,10 @@ abstract class DBModel extends Model
 
         foreach ($this->props as $key => $value) {
             if ($value) {
-                if ($key == 'views') {
-                    $params[":views"] = (int)$this->views;
-                } else {
-                    $params[":" . $key] = $this->$key;
-                }
-                $sql .= "`$key` = :$key";
-                $sql .= $ds;
+                $params[":" . $key] = $this->$key;
+                $sql .= "`$key` = :$key, ";
+
+                $this->props[$key] = false;
             }
         }
         if ($ds == substr($sql, -2)) {

@@ -8,12 +8,18 @@ abstract class Model implements IModel
 
     public function __set($name, $value)
     {
-        $this->props[$name] = true;
-        $this->$name = $value;
+        if (array_key_exists($name, $this->props)) {
+            $this->props[$name] = true;
+            $this->$name = $value;
+        }
+        return null;
     }
 
     public function __get($name)
     {
-        return $this->$name;
+        if (array_key_exists($name, $this->props)) {
+            return $this->$name;
+        }
+        return null;
     }
 }

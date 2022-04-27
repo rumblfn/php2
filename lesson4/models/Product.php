@@ -29,6 +29,7 @@ class Product extends DBModel
         $this->title = $name;
         $this->description = $description;
         $this->price = $price;
+        $this->views = 0;
     }
 
 

@@ -18,11 +18,6 @@ abstract class Controller
         }
     }
 
-    private function actionIndex()
-    {
-        $this->render('index');
-    }
-
     public function render($template, $params = [])
     {
         $params = [

@@ -8,4 +8,4 @@
     </div>
 <?php endforeach;?>
 
-<a href="/?c=product&a=catalog&page=<?=$page?>">Еще</a>
+<a href="/public/?c=product&a=catalog&page=<?=$page?>">Еще</a>
