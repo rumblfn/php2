@@ -16,16 +16,25 @@ abstract class DBModel extends Model
         return Db::getInstance()->queryOneObject($sql, [':login' => $value], static::class);
     }
 
-    public function insert(): Model
+    public function insert($register = null): Model
     {
+        if ($register) {
+            $user = User::getWhere('login', $this->login);
+            if ($user->id) {
+                die('пользователь с таким логином уже существует');
+            }
+        }
+
         $params = [];
         $columns = [];
 
         foreach ($this->props as $key => $value) {
-            $params[":" . $key] = $this->$key;
-            $columns[] = $key;
+            if ($this->$key) {
+                $params[":" . $key] = $this->$key;
+                $columns[] = $key;
 
-            $this->props[$key] = false;
+                $this->props[$key] = false;
+            }
         }
 
         $columns = implode(', ', $columns);
@@ -68,8 +77,12 @@ abstract class DBModel extends Model
         return $this;
     }
 
-    public function save() {
-        $this->id ? $this->update() : $this->insert();
+    public function save($register = null) {
+        if ($register) {
+            $this->insert($register);
+        } else {
+            $this->id ? $this->update() : $this->insert();
+        }
     }
 
     public function delete() {

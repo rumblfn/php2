@@ -24,15 +24,23 @@ class User extends DBModel
     public function __construct($login = null, $pass = null)
     {
         $this->login = $login;
-        $this->password = $pass;
+        $this->password = password_hash($pass, PASSWORD_DEFAULT);;
     }
 
-    public static function Auth($login, $pass)
+    public static function Auth($login, $pass): bool
     {
-
+        $user = User::getWhere('login', $login);
+        if (!$user) {
+            return false;
+        }
+        if (password_verify($pass, $user->password)) {
+            $_SESSION['login'] = $login;
+            return true;
+        }
+        return false;
     }
 
-    public function isAuth()
+    public function isAuth(): bool
     {
         return isset($_SESSION['login']);
     }

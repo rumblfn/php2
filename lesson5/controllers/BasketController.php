@@ -9,7 +9,7 @@ class BasketController extends Controller
     protected function actionIndex()
     {
         $basket = Basket::getBasket();
-        $this->render('index', [
+        $this->render('basket/index', [
             'basket' => $basket,
         ]);
     }
