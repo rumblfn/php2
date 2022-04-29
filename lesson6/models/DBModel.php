@@ -89,16 +89,18 @@ abstract class DBModel extends Model
         }
     }
 
-    public function delete() {
-        $id = $this->id;
-        $sql = "DELETE FROM {static::getTableName()} WHERE id = $id";
-        return Db::getInstance()->execute($sql);
+    public function delete()
+    {
+        $tableName = static::getTableName();
+        $sql = "DELETE FROM $tableName WHERE id = :id";
+        return Db::getInstance()->execute($sql, ['id' => $this->id]);
     }
 
     public static function getOne($id) {
         $tableName = static::getTableName();
+        $params = ['id' => (int)$id];
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        return Db::getInstance()->queryOneObject($sql, ['id' => (int)$id], static::class);
+        return Db::getInstance()->queryOneObject($sql, $params, static::class);
     }
 
     public static function getAll() {

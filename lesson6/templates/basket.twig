@@ -1,7 +1,7 @@
 <h2>Корзина main</h2>
 
 {% for item in basket %}
-    <div id="{{ item.id }}">
+    <div id="{{ item.basket_id }}">
         <h3>{{ item.title }}</h3>
         <p>price: {{ item.price }}</p>
         <button class="remove" data-id="{{ item.basket_id }}">Удалить</button>
@@ -16,7 +16,9 @@
             (async () => {
                 const response = await fetch('/basket/remove/?id=' + id)
                 const answer = await response.json();
+                console.log(answer);
                 document.getElementById('count').innerText = answer.count;
+                document.getElementById(id).remove();
             })()
         })
     })

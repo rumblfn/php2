@@ -1,11 +1,7 @@
 <?php
 
-session_start();
-
-use app\engine\Autoload;
+use app\engine\{Autoload, TwigRender, Request, Session};
 use app\models\{Product, User};
-use app\engine\TwigRender;
-use app\engine\Request;
 
 include dirname(__DIR__) . "/config/config.php";
 include ROOT . "/engine/Autoload.php";
@@ -13,12 +9,13 @@ include ROOT . "/engine/Autoload.php";
 spl_autoload_register([new Autoload(), 'loadClass']);
 require_once '../vendor/autoload.php';
 
-$request = new Request();
+Session::getInstance()->start();
+$request = Request::getInstance();
 
 $url = explode('/', $_SERVER['REQUEST_URI']);
 
-$controllerName = $request->getControllerName() ?: 'product';
-$actionName = $request->getActionName();
+$controllerName = $request->controllerName ?: 'product';
+$actionName = $request->actionName;
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . 'Controller';
 

@@ -2,8 +2,13 @@
 
 namespace app\engine;
 
+use app\traits\TSingletone;
+
 class Request
 {
+    use TSingletone;
+
+    private $requestParsed = false;
     protected $requestString;
     protected $controllerName;
     protected $actionName;
@@ -11,10 +16,12 @@ class Request
     protected $method;
     protected $params = [];
 
-
-    public function __construct()
+    public function __get($name)
     {
-        $this->parseRequest();
+        if (!$this->requestParsed) {
+            $this->parseRequest();
+        }
+        return $this->$name;
     }
 
     protected function parseRequest()
@@ -30,42 +37,11 @@ class Request
 
         $data = json_decode(file_get_contents('php://input'));
 
-        if ($data != null) {
-            //TODO* добавить в Params данные JSON
+        if (!is_null($data)) {
+            foreach ($data as $key => $value) {
+                $this->params[$key] = $value;
+            }
         }
+        $this->requestParsed = true;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getControllerName()
-    {
-        return $this->controllerName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActionName()
-    {
-        return $this->actionName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParams(): array
-    {
-        return $this->params;
-    } //$_REQUEST
-
-
 }

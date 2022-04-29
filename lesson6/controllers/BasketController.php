@@ -2,13 +2,15 @@
 
 namespace app\controllers;
 
+use app\engine\Request;
+use app\engine\Session;
 use app\models\Basket;
 
 class BasketController extends Controller
 {
     public function actionIndex()
     {
-        $session_id = session_id();
+        $session_id = Session::getInstance()->getId();
         $basket = Basket::getBasket($session_id);
         $this->render('basket', [
             'basket' => $basket,
@@ -17,8 +19,8 @@ class BasketController extends Controller
 
     public function actionAdd()
     {
-        $id = $_GET['id'];
-        $session_id = session_id();
+        $id = Request::getInstance()->params['id'];
+        $session_id = Session::getInstance()->getId();
 
         $basket = new Basket($session_id, $id);
         $basket->save();
@@ -33,16 +35,20 @@ class BasketController extends Controller
 
     public function actionRemove()
     {
-        $id = $_GET['id'];
-        $session_id = session_id();
-
+        $id = Request::getInstance()->params['id'];
+        $session_id = Session::getInstance()->getId();
         $basket = Basket::getOne($id);
-        var_dump($basket);
-        die();
-        $basket->delete();
+        $error = 'error';
+
+        if (!$basket) {
+            $error = 'basket not exist';
+        } else if ($session_id == $basket->session_id) {
+            $basket->delete();
+            $error = 'ok';
+        }
 
         $response = [
-            'status' => 'ok',
+            'status' => $error,
             'count' => Basket::getCountWhere('session_id', $session_id)
         ];
 

@@ -15,7 +15,7 @@ class Basket extends DBModel
         'item_id' => false
     ];
 
-    public function __construct($session_id, $item_id)
+    public function __construct($session_id = null, $item_id = null)
     {
         $this->session_id = $session_id;
         $this->item_id = $item_id;

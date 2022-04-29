@@ -3,6 +3,8 @@
 namespace app\models;
 
 
+use app\engine\Session;
+
 class User extends DBModel
 {
     public $id;
@@ -34,7 +36,7 @@ class User extends DBModel
             return false;
         }
         if (password_verify($pass, $user->password)) {
-            $_SESSION['login'] = $login;
+            Session::getInstance()->set('login', $login);
             return true;
         }
         return false;
@@ -42,12 +44,12 @@ class User extends DBModel
 
     public function isAuth(): bool
     {
-        return isset($_SESSION['login']);
+        return Session::getInstance()->get('login') !== null;
     }
 
     public function getName()
     {
-        return $_SESSION['login'];
+        return Session::getInstance()->get('login');
     }
 
 

@@ -22,7 +22,7 @@ class ProductController extends Controller
     }
     protected function actionCard()
     {
-        $id = (new Request())->getParams()['id'];
+        $id = Request::getInstance()->params['id'];
         $product = Product::getOne($id);
 
         $this->render('product/card', [

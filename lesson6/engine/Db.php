@@ -2,10 +2,13 @@
 
 namespace app\engine;
 
+use app\models\Basket;
 use app\traits\TSingletone;
 
 class Db
 {
+    use TSingletone;
+
     private $config = [
         'driver' => 'mysql',
         'host' => 'localhost:8889',
@@ -16,8 +19,6 @@ class Db
     ];
 
     private $connection = null; //PDO
-
-    use TSingletone;
 
     private function getConnection(): \PDO
     {
