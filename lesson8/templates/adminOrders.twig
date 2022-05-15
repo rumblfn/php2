@@ -1,0 +1,28 @@
+<h2>Заказы</h2>
+<a href="/admin">Admin panel</a>
+{% for item in orders %}
+    <div id="{{ item.id }}">
+        <h3>Заказ {{ item.id }}</h3>
+        <p>Почта получателя: {{ item.email }}</p>
+        <p>Телефон получателя: {{ item.telephone_number }}</p>
+        <p>Адрес получателя: {{ item.address }}</p>
+        <a href="/admin/order/?id={{ item.id }}">Подробнее</a>
+        <button class="removeOrder" data-id="{{ item.id }}">Отменить заказ</button>
+    </div>
+{% endfor %}
+
+<script>
+    let buttons = document.querySelectorAll('.removeOrder');
+    buttons.forEach((e) => {
+        e.addEventListener('click', () => {
+            let id = e.getAttribute('data-id');
+            (async () => {
+                const response = await fetch('/order/remove/?id=' + id)
+                const answer = await response.json();
+                console.log(answer);
+                document.getElementById('orderCount').innerText = answer.count;
+                document.getElementById(id).remove();
+            })()
+        })
+    })
+</script>
