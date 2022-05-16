@@ -13,7 +13,7 @@ class ProductController extends Controller
     {
         $page = $_GET['page'] ?? 0;
 
-        $catalog = App::call()->productRepository->getLimit(($page + 1) * 2);
+        $catalog = App::call()->productRepository->getLimit(($page + 1) * 12);
         $this->render('product/catalog',[
             'catalog' => $catalog,
             'page' => ++$page

@@ -71,7 +71,7 @@ class OrderController extends Controller
 
         if (!$order) {
             $error = 'basket not exist';
-        } else if ($session_id == $order->session_id) {
+        } else if ($session_id == $order->session_id || App::call()->userRepository->isAdmin()) {
             App::call()->orderRepository->delete($order);
             $error = 'ok';
         }

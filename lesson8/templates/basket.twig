@@ -1,4 +1,4 @@
-<h2>Корзина main</h2>
+<h2>Ваша корзина</h2>
 <form action="/basket/order" method="post">
     <input type="email" name="email" required placeholder="email">
     <input type="text" name="telephone" required placeholder="telephone number">
@@ -6,26 +6,15 @@
     <input type="submit" name="submit" value="place an order">
 </form>
 
-{% for item in basket %}
-    <div id="{{ item.basket_id }}">
-        <h3>{{ item.title }}</h3>
-        <p>price: {{ item.price }}</p>
-        <button class="remove" data-id="{{ item.basket_id }}">Удалить</button>
-    </div>
-{% endfor %}
-
-<script>
-    let buttons = document.querySelectorAll('.remove');
-    buttons.forEach((e) => {
-        e.addEventListener('click', () => {
-            let id = e.getAttribute('data-id');
-            (async () => {
-                const response = await fetch('/basket/remove/?id=' + id)
-                const answer = await response.json();
-                console.log(answer);
-                document.getElementById('count').innerText = answer.count;
-                document.getElementById(id).remove();
-            })()
-        })
-    })
-</script>
+<div class="catalog">
+    {% for item in basket %}
+        <div class="product" id="{{ item.basket_id }}">
+            <div class="product-img">
+            </div>
+            <a href="/product/card/?id={{ item.prod_id }}">
+                <p>{{ item.title }} - {{ item.price }}</p>
+            </a>
+            <button class="remove" data-id="{{ item.basket_id }}">Удалить</button>
+        </div>
+    {% endfor %}
+</div>

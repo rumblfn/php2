@@ -1,13 +1,13 @@
 <div id="{{ order.id }}">
-    <h3>Заказ {{ order.id }}</h3>
-    <p>Почта получателя: {{ order.email }}</p>
-    <p>Телефон получателя: {{ order.telephone_number }}</p>
-    <p>Адрес получателя: {{ order.address }}</p>
+    <h3 style="margin-top: 12px">Заказ {{ order.id }}</h3>
+    <p style="margin-top: 12px">Почта получателя: {{ order.email }}</p>
+    <p style="margin-top: 12px">Телефон получателя: {{ order.telephone_number }}</p>
+    <p style="margin-top: 12px">Адрес получателя: {{ order.address }}</p>
 </div>
-<div>
-    <h4>Товары</h4>
+<div style="margin: 24px;">
+    <h4 style="margin-bottom: 16px">Товары</h4>
     {% for item in items %}
-        <div>
+        <div style="margin: 16px">
             <h3><a href="/product/card/?id={{ item.id }}">{{ item.title }}</a></h3>
             <p>price: {{ item.price }}</p>
         </div>

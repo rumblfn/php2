@@ -1,8 +1,6 @@
-<h2>Товар</h2>
-
 <div>
-    <h3>{{ product.title }}</h3>
-    <p>{{ product.description }}</p>
-    <p>price: {{ product.price }}</p>
-    <button>Купить</button>
+    <h2 class="product-title">{{ product.title }}</h2>
+    <p class="product-description">{{ product.description }}</p>
+    <p class="product-price">price: {{ product.price }}</p>
+    <button class="buy" data-id="{{ product.id }}">Купить</button>
 </div>
