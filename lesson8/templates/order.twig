@@ -1,0 +1,11 @@
+<h2>Ваши заказы</h2>
+{% for item in orders %}
+    <div id="{{ item.id }}">
+        <h3>Заказ {{ item.id }}</h3>
+        <p style="margin-top: 12px">Почта: {{ item.email }}</p>
+        <p style="margin-top: 12px">Телефон: {{ item.telephone_number }}</p>
+        <p style="margin-top: 12px"style="margin-top: 12px">Адрес: {{ item.address }}</p>
+        <a style="margin-top: 12px; margin-right: 16px" href="/order/order/?id={{ item.id }}">Подробнее</a>
+        <button style="margin-top: 12px" class="removeOrder" data-id="{{ item.id }}">Отменить заказ</button>
+    </div>
+{% endfor %}

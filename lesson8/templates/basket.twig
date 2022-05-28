@@ -1,0 +1,20 @@
+<h2>Ваша корзина</h2>
+<form action="/basket/order" method="post">
+    <input type="email" name="email" required placeholder="email">
+    <input type="text" name="telephone" required placeholder="telephone number">
+    <input type="text" name="address" required placeholder="address">
+    <input type="submit" name="submit" value="place an order">
+</form>
+
+<div class="catalog">
+    {% for item in basket %}
+        <div class="product" id="{{ item.basket_id }}">
+            <div class="product-img">
+            </div>
+            <a href="/product/card/?id={{ item.prod_id }}">
+                <p>{{ item.title }} - {{ item.price }}</p>
+            </a>
+            <button class="remove" data-id="{{ item.basket_id }}">Удалить</button>
+        </div>
+    {% endfor %}
+</div>

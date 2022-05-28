@@ -1,0 +1,26 @@
+<div class="menu">
+    <div class="container-menu">
+        <div>
+            <a class="container-menu-link" href="/">Главная</a>
+            <a class="container-menu-link" href="/product/catalog">Каталог</a>
+            <a class="container-menu-link" href="/basket">
+                Корзина
+                {% if count > 0 %}
+                    (<span id="count">{{ count }}</span>)
+                {% endif %}
+            </a>
+            <a class="container-menu-link" href="/order">
+                Ваши заказы
+                {% if orderCount > 0 %}
+                    (<span id="orderCount">{{ orderCount }}</span>)
+                {% endif %}
+            </a>
+        </div>
+        <div>
+            {% if is_admin %}
+                <a class="container-menu-link" href="/admin">Admin panel</a>
+            {% endif %}
+            <a class="container-menu-link" href="/auth">Вход</a>
+        </div>
+    </div>
+</div>

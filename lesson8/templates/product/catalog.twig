@@ -1,0 +1,18 @@
+<h2>Каталог</h2>
+
+<div class="catalog">
+    {% for item in catalog %}
+        <div class="product">
+            <div class="product-img">
+            </div>
+            <a href="/product/card/?id={{ item.id }}">
+                <p>{{ item.title }} - {{ item.price }}</p>
+            </a>
+            <div class="buy button-buy" data-id="{{ item.id }}">В корзину</div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="load-button-block">
+    <a href="/product/catalog/?page={{ page }}" class="load-button">Загрузить еще</a>
+</div>
